@@ -54,7 +54,8 @@ The workflow does the following:
 * Retrieves a single message from an Amazon SQS Queue, to be used as a way to test the Lambda.
 * On Failure: 
   * Backs off, and retries at a later time. Does so until it has exceeded its number of allowed retries, or until the downstream service is fixed.
-* On Success:  Message
+* On Success:
+  * Deletes the Test SQS Message
   * Optional (Rejitter): 
     * Assigns a Lambda, that is driven by the Amazon SQS Event Source
     * Takes all messages, and adds a random rejitter delay to them, and then reques them
@@ -65,8 +66,6 @@ The workflow does the following:
 ## Technologies used
 
 * Typescript - Used for both the AWS CDK, and the example lambdas.
-* AW
-  * Deletes the Test Amazon SQSS Lambda - Used to rejitter messages from Amazon SQS. 
 * Amazon SQS - Used as both an Event Source for the example lambda, and used to reprocess the incoming events. 
 * AWS Step Functions - Variety of Step Function Tasks used in order to accomplish the logic for the Circuit Breaker. 
 * AWS Lambda - Used to drive the messages to the external service, and also to rejitter messages back into the Amazon SQS Queue. 
